@@ -8,10 +8,10 @@ CFLAGS = -Wall -g
 LIBS = -lpthread -ldl
 
 # Target executable
-TARGET = my_program
+TARGET = test
 
 # Source files
-SRCS = my_program.c sqlite3.c
+SRCS = test.c sqlite3.c
 
 # Object files (automatically generated from source files)
 OBJS = $(SRCS:.c=.o)
