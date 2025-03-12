@@ -2,31 +2,32 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -g
+CFLAGS = -O2
 
-# Libraries to link
-LIBS = -lpthread -ldl
+# Source files (only your program)
+SRCS = main.c sqlite3.c
 
-# Target executable
-TARGET = test
-
-# Source files
-SRCS = test.c sqlite3.c
-
-# Object files (automatically generated from source files)
+# Object files
 OBJS = $(SRCS:.c=.o)
+
+# Executable name
+TARGET = main
 
 # Default target
 all: $(TARGET)
 
-# Rule to build the target executable
+# Link the object files to create the executable
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LDFLAGS)
 
-# Rule to compile .c files to .o files
+# Compile source files into object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean up build files
 clean:
-	rm -f $(OBJS) $(TARGET)
+	del /F /Q $(OBJS) $(TARGET).exe 2> NUL || exit 0
+
+
+# Phony targets (not actual files)
+.PHONY: all clean
