@@ -22,7 +22,7 @@ void registerUser(char *registeredUser) {
     char user[MAX_LEN], pass[MAX_LEN];
     userinfo(user, pass);
 
-    FILE *file = fopen("records.txt", "a");
+    FILE *file = fopen("data/records.txt", "ab");
     if (!file) {
         perror("Error opening file");
         exit(EXIT_FAILURE);
@@ -33,8 +33,6 @@ void registerUser(char *registeredUser) {
 
     // Copy back the username to return it to the caller
     strcpy(registeredUser, user);
-
-    printf("User registered successfully!\n");
 }
 
 
@@ -43,7 +41,7 @@ int authenticateUser(char *authenticatedUser) {
     char inputUser[MAX_LEN], inputPass[MAX_LEN];
     userinfo(inputUser, inputPass);
 
-    FILE *file = fopen("records.txt", "r");
+    FILE *file = fopen("data/records.txt", "rb");
     if (!file) {
         printf("No user records found. Register first.\n");
         return 0;
@@ -54,7 +52,6 @@ int authenticateUser(char *authenticatedUser) {
         if (strcmp(inputUser, fileUser) == 0 && strcmp(inputPass, filePass) == 0) {
             fclose(file);
             strcpy(authenticatedUser, inputUser);  // ✅ Send username back to main
-            printf("Login successful!\n");
             return 1;
         }
     }

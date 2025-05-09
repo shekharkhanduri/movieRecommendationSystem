@@ -1,32 +1,37 @@
 # Compiler
 CC = gcc
 
+# Directories
+INCLUDE_DIR = include
+SRC_DIR = src
+BUILD_DIR = build
+DATA_DIR = data
+
 # Compiler flags
-CFLAGS = -O2
+CFLAGS = -Wall -I$(INCLUDE_DIR)
 
-# Libraries to link
-LIBS = -lpthread -ldl
+# Source and Object Files
+SRCS := $(wildcard $(SRC_DIR)/*.c)
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 
-# Target executable
+# Target
 TARGET = main
 
-# Source files
-SRCS = main.c sqlite3.c
+# Default Rule
+all: $(BUILD_DIR) $(TARGET)
 
-# Object files (automatically generated from source files)
-OBJS = $(SRCS:.c=.o)
-
-# Default target
-all: $(TARGET)
-
-# Rule to build the target executable
+# Link all objects into the final executable
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
+	$(CC) $(OBJS) -o $@
 
-# Rule to compile .c files to .o files
-%.o: %.c
+# Compile each .c file into .o object
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean up build files
+# Ensure build directory exists
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+# Clean rule for Windows (optional)
 clean:
-	rm -f $(OBJS) $(TARGET)
+	del /Q $(BUILD_DIR)\*.o $(TARGET).exe 
