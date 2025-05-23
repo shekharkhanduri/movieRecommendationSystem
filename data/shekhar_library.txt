@@ -1,0 +1,12 @@
+ID: 4
+Name: The Lord of the Rings: The Fellowship of the Ring
+Genre: Fantasy, Adventure
+Mood: Adventurous
+Rating: 8.8
+--------------------
+ID: 6
+Name: Schindler's List 
+Genre: Biography,Drama,History
+Mood: Somber ,Reflective
+Rating: 9.0
+--------------------
