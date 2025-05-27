@@ -3,6 +3,13 @@
 #include "sqlite3.h"
 #include <string.h>
 
+#define RESET   "\033[0m"
+#define GREEN   "\033[32m"
+#define CYAN    "\033[36m"
+#define YELLOW  "\033[33m"
+#define BOLD    "\033[1m"
+
+
 #define DB_NAME "data/mydatabase.db"
 
 // Callback function for displaying search results
@@ -10,10 +17,11 @@ int display_callback(void *flag, int argc, char **argv, char **col_name) {
     int *found = (int *)flag;
     *found = 1; // Mark result as found
 
-    printf("\n=============================\n");
+    printf(GREEN "\n═══════════════════════════════════════════════════\n" RESET);
     for (int i = 0; i < argc; i++) {
-        printf("\n[%s]: %s\n", col_name[i], argv[i] ? argv[i] : "NULL");
+        printf(BOLD YELLOW "%-15s: " RESET CYAN "%s\n", col_name[i], argv[i] ? argv[i] : "NULL");
     }
+    printf(GREEN "═══════════════════════════════════════════════════\n" RESET);
     return 0;
 }
 
@@ -31,7 +39,7 @@ sqlite3* open_database() {
 }
 
 // Search by numeric column
-void search_by_column_num(const char *column, const char value) {
+void search_by_column_num(const char *column, const int value) {
     sqlite3 *db = open_database();
     if (!db) return;
 
